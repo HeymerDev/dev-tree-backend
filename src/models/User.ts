@@ -1,12 +1,19 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, } from "mongoose";
 
 interface UserInterface {
+    handle: string;
     username: string;
     email: string;
     password: string;
 }
 
 const userSchema = new Schema({
+    handle: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true,
+    },
     username: {
         type: String,
         required: true,
