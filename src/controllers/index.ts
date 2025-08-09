@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import User from "../models/User";
 import { comparePassword, hashPassword } from "../utils/auth";
-import { generateJWT } from "../utils/jwt";
+import { generateJWT,  } from "../utils/jwt";
 
 export const registerUser = async (req: Request, res: Response) => {
     const slug = (await import("slug")).default;
@@ -48,4 +48,8 @@ export const login = async (req: Request, res: Response) => {
     const token = generateJWT({id: userExists._id});
 
     res.status(200).json({ token });
+}
+
+export const getUser = async (req: Request, res: Response) => {
+    res.status(200).json(req.user);
 }
