@@ -34,14 +34,14 @@ export const login = async (req: Request, res: Response) => {
     // Validate email existence
     const userExists = await User.findOne({ email });
     if (!userExists) {
-        res.status(404).json({ message: "Email not found" });
+        res.status(404).json({ message: "Invalid credentials" });
         return;
     }
 
     // Validate password
     const isValidPassword = await comparePassword(password, userExists.password);
     if (!isValidPassword) {
-        res.status(401).json({ message: "Invalid password" });
+        res.status(401).json({ message: "Invalid credentials" });
         return;
     }
 
