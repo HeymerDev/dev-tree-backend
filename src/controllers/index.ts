@@ -55,8 +55,21 @@ export const getUser = async (req: Request, res: Response) => {
 }
 
 export const updateUser = async (req: Request, res: Response) => {
+    const slug = (await import("slug")).default;
     try {
-        console.log(req.body);
+        const { description } = req.body;
+        const handle = slug(req.body.handle);
+        const handleExists = await User.findOne({ handle });
+        if (handleExists && handleExists.email !== req.user.email) {
+            res.status(409).json({ message: "Handle already exists" });
+            return;
+        }
+
+        req.user.description = description;
+        req.user.handle = handle;
+        req.user.save();
+        res.status(200).json({ message: "User updated successfully" });
+
     } catch (error) {
         new Error(error);
         res.status(500).json({ message: "Internal server error" });
