@@ -6,6 +6,7 @@ export interface UserInterface extends Document {
   email: string;
   password: string;
   description: string;
+  imageUrl?: string;
 }
 
 const userSchema = new Schema({
@@ -38,6 +39,12 @@ const userSchema = new Schema({
     required: false,
     default: "",
     trim: true,
+  },
+  imageUrl: {
+    type: String,
+    required: false,
+    trim: true,
+    default: "",
   },
 });
 
