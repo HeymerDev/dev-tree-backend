@@ -60,7 +60,7 @@ export const getUser = async (req: Request, res: Response) => {
 export const updateUser = async (req: Request, res: Response) => {
   const slug = (await import("slug")).default;
   try {
-    const { description } = req.body;
+    const { description, links } = req.body;
     const handle = slug(req.body.handle);
     const handleExists = await User.findOne({ handle });
     if (handleExists && handleExists.email !== req.user.email) {
@@ -70,6 +70,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
     req.user.description = description;
     req.user.handle = handle;
+    req.user.links = links;
     req.user.save();
     res.status(200).json({ message: "User updated successfully" });
   } catch (error) {

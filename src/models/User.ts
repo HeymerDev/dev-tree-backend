@@ -7,6 +7,7 @@ export interface UserInterface extends Document {
   password: string;
   description: string;
   imageUrl?: string;
+  links: string
 }
 
 const userSchema = new Schema({
@@ -46,6 +47,10 @@ const userSchema = new Schema({
     trim: true,
     default: "",
   },
+  links: {
+    type: String,
+    default: "[]"
+  }
 });
 
 const User = mongoose.model<UserInterface>("User", userSchema);
