@@ -53,6 +53,22 @@ export const login = async (req: Request, res: Response) => {
   res.status(200).json({ token });
 };
 
+export const getUserByHandle = async (req: Request, res: Response) => {
+  try {
+  const { handle } = req.params;
+  const user = await User.findOne({ handle }).select("-password");
+  if (!user) {
+    res.status(404).json({ message: "User not found", success: false, status: 404 });
+    return;
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    new Error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 export const getUser = async (req: Request, res: Response) => {
   res.status(200).json(req.user);
 };

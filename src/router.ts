@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { getUser, login, registerUser, updateUser, uploadImage } from "./controllers";
+import { getUser, getUserByHandle, login, registerUser, updateUser, uploadImage } from "./controllers";
 import { handleInputErrors } from "./middlewares/middleware";
 import { authenticate } from "./middlewares/auth";
 
@@ -21,6 +21,7 @@ router.post("/auth/login",
     login);
 
 router.get("/user",authenticate, getUser);
+router.get("/:handle", getUserByHandle);
 router.patch("/user",
     body("handle").notEmpty().withMessage("Handle is required"),
     body("description").notEmpty().withMessage("Description is required"),
