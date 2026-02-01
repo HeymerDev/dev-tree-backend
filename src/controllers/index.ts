@@ -56,7 +56,7 @@ export const login = async (req: Request, res: Response) => {
 export const getUserByHandle = async (req: Request, res: Response) => {
   try {
   const { handle } = req.params;
-  const user = await User.findOne({ handle }).select("-password");
+  const user = await User.findOne({ handle }).select("-password -email -__v -_id" );
   if (!user) {
     res.status(404).json({ message: "User not found", success: false, status: 404 });
     return;
