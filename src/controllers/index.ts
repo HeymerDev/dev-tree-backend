@@ -68,6 +68,22 @@ export const getUserByHandle = async (req: Request, res: Response) => {
   }
 };
 
+export const searchHandle = async (req: Request, res: Response) => {
+  try {
+    const { handle } = req.body;
+    const userExists = await User.findOne({ handle });
+    if (userExists) {
+      const error = new Error(`Handle already exists ${handle}`);
+      res.status(409).json({ message: error.message });
+      return;
+    }
+    res.status(200).json({ message: "Handle is available" });
+    } catch (error) {
+    new Error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 export const getUser = async (req: Request, res: Response) => {
   res.status(200).json(req.user);
